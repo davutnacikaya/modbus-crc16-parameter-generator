@@ -236,20 +236,20 @@
 </head>
 <body>
     <div class="container">
-        <h2>Modbus CRC16 Hesaplama</h2>
+        <h2>Modbus CRC16 Calculator</h2>
         <div class="input-group">
-            <label for="hexInput">HEX Girişi:</label>
-            <input type="text" id="hexInput" placeholder="Örnek: 0x31,0x32,... veya 31 32 33... veya 313233...">
-            <button onclick="calculateCRC()">Hesapla</button>
+            <label for="hexInput">HEX Input:</label>
+            <input type="text" id="hexInput" placeholder="Sample: 0x31,0x32,... veya 31 32 33... veya 313233...">
+            <button onclick="calculateCRC()">Calculate</button>
             <div id="errorMessage" class="error-message"></div>
         </div>
         <div class="result-section" style="display: none;">
             <h3>Sonuçlar:</h3>
             <p>Big Endian CRC16: <span id="bigEndian"></span></p>
             <p>Little Endian CRC16: <span id="littleEndian"></span></p>
-            <h3>CRC Dahil Mesaj (İlk 6 byte + CRC):</h3>
-            <p>Big Endian Mesaj: <span id="bigEndianMessage"></span></p>
-            <p>Little Endian Mesaj: <span id="littleEndianMessage"></span></p>
+            <h3>CRC Mesage (İlk 6 byte + CRC):</h3>
+            <p>Big Endian Mesage: <span id="bigEndianMessage"></span></p>
+            <p>Little Endian Mesage: <span id="littleEndianMessage"></span></p>
         </div>
     </div>
 </body>
