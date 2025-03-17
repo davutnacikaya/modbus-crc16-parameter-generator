@@ -185,9 +185,9 @@
             let parsedHex = parseInput(inputHex);
 
             if (!parsedHex) {
-                errorMessage.innerText = "Customizable line height Enter a valid HEX value Example formats: 0x31,0x32,... or 31 32 33... or 313233...";
-                errorMessage.style.display = 'block';
-                return;
+            errorMessage.innerText = "Customizable line height Enter a valid HEX value Example formats: 0x31,0x32,... or 31 32 33... or 313233...";
+            errorMessage.style.display = 'block';
+            return;
             }
 
             // İlk 6 byte (12 karakter) ile sınırlı tutalım
