@@ -185,7 +185,8 @@
             let parsedHex = parseInput(inputHex);
 
             if (!parsedHex) {
-                errorMessage.innerText = "Geçerli bir HEX değeri giriniz (en az 6 byte, 12 karakter). Örnek formatlar: 0x31,0x32,... veya 31 32 33... veya 313233...";
+                errorMessage.innerText = "Customizable line height
+Enter a valid HEX value (minimum 6 bytes, 12 characters). Example formats: 0x31,0x32,... or 31 32 33... or 313233...";
                 errorMessage.style.display = 'block';
                 return;
             }
@@ -239,7 +240,7 @@
         <h2>Modbus CRC16 Calculator</h2>
         <div class="input-group">
             <label for="hexInput">HEX Input:</label>
-            <input type="text" id="hexInput" placeholder="Sample: 0x31,0x32,... veya 31 32 33... veya 313233...">
+            <input type="text" id="hexInput" placeholder="Sample: 0x31,0x32,... or 31 32 33... or 313233...">
             <button onclick="calculateCRC()">Calculate</button>
             <div id="errorMessage" class="error-message"></div>
         </div>
