@@ -1,256 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modbus CRC16 Calculator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Modbus CRC16 Calculator - 2025</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
         body {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #2d2d44);
+            color: #e0e0e0;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
         }
-
         .container {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 30px;
             width: 100%;
-            max-width: 600px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 450px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
         h2 {
+            margin: 0 0 20px;
+            font-size: 24px;
+            color: #00d4ff;
             text-align: center;
-            margin-bottom: 20px;
-            font-size: 28px;
-            color: #f0f0f0;
+            letter-spacing: 1px;
         }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
         label {
-            font-size: 16px;
-            color: #ddd;
-        }
-
-        input {
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        input::placeholder {
-            color: #aaa;
-        }
-
-        input:focus {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.02);
-        }
-
-        button {
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            background: #00b4db;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        button:hover {
-            background: #0083b0;
-            transform: translateY(-2px);
-        }
-
-        .error-message {
-            color: #ff6b6b;
             font-size: 14px;
-            margin-top: 10px;
-            text-align: center;
-            display: none;
+            color: #b0b0b0;
+            margin-bottom: 8px;
+            display: block;
         }
-
-        .result-section {
-            margin-top: 20px;
-        }
-
-        h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #ddd;
-        }
-
-        p {
+        input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
             font-size: 16px;
-            margin-bottom: 10px;
-            color: #ccc;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
         }
-
-        span {
-            color: #00b4db;
-            font-weight: 600;
+        input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
         }
-
-        @media (max-width: 500px) {
-            .container {
-                padding: 20px;
-            }
-
-            h2 {
-                font-size: 24px;
-            }
-
-            input, button {
-                font-size: 14px;
-                padding: 10px;
-            }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #00d4ff, #007bff);
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(45deg, #00eaff, #008cff);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .result-container {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .result-container.error {
+            background: rgba(255, 75, 75, 0.1);
+            color: #ff4b4b;
+        }
+        #result {
+            color: #00d4ff;
+            font-weight: bold;
         }
     </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Modbus CRC16 Calcultor</h2>
+        <label for="inputText">Hex İnput (Example: 01031000)</label>
+        <input type="text" id="inputText" placeholder="Enter hex value">
+        <div class="button-group">
+            <button onclick="calculateCRC('big')">Big Endian</button>
+            <button onclick="calculateCRC('little')">Little Endian</button>
+        </div>
+        <div class="result-container">
+            Result: <span id="result"></span>
+        </div>
+    </div>
+
     <script>
-        function parseInput(input) {
-            // Tüm girişi temizleyelim: büyük harfe çevirelim ve gereksiz boşlukları kaldıralım
-            input = input.trim().toUpperCase();
-
-            // Farklı formatları işlemek için bir HEX dizesine çevirelim
-            let hexString = '';
-
-            // 1. Format: 0x31, 0x32, 0x33 veya 0x31,0x32,0x33
-            if (input.includes('0X')) {
-                let bytes = input.split(',').map(byte => byte.trim().replace('0X', ''));
-                if (bytes.every(byte => /^[0-9A-F]{1,2}$/.test(byte))) {
-                    hexString = bytes.join('');
-                }
-            }
-            // 2. Format: 31 32 33 34 veya 31 32 33 34
-            else if (input.includes(' ')) {
-                let bytes = input.split(' ').filter(byte => byte !== '');
-                if (bytes.every(byte => /^[0-9A-F]{1,2}$/.test(byte))) {
-                    hexString = bytes.join('');
-                }
-            }
-            // 3. Format: 313233343536373839 (birleşik)
-            else if (/^[0-9A-F]+$/.test(input)) {
-                hexString = input;
-            }
-
-            // Eğer geçerli bir HEX dizesi oluşmadıysa hata döndürelim
-            if (!hexString || hexString.length < 12 || hexString.length % 2 !== 0) {
-                return null;
-            }
-
-            return hexString;
-        }
-
-        function calculateCRC() {
-            let inputHex = document.getElementById("hexInput").value;
-            let errorMessage = document.getElementById("errorMessage");
-            let resultSection = document.querySelector(".result-section");
-
-            // Hata mesajını gizle ve sonuçları sıfırla
-            errorMessage.style.display = 'none';
-            resultSection.style.display = 'none';
-            document.getElementById("bigEndian").innerText = '';
-            document.getElementById("littleEndian").innerText = '';
-            document.getElementById("bigEndianMessage").innerText = '';
-            document.getElementById("littleEndianMessage").innerText = '';
-
-            // Girişi analiz et
-            let parsedHex = parseInput(inputHex);
-
-            if (!parsedHex) {
-            errorMessage.innerText = "Customizable line height Enter a valid HEX value Example formats: 0x31,0x32,... or 31 32 33... or 313233...";
-            errorMessage.style.display = 'block';
-            return;
-            }
-
-            // İlk 6 byte (12 karakter) ile sınırlı tutalım
-            let truncatedHex = parsedHex.slice(0, 12);
-            let dataBytes = hexStringToBytes(truncatedHex);
-            let crc = computeCRC16(dataBytes);
-            let bigEndianCRC = crc.toString(16).toUpperCase().padStart(4, '0');
-            let littleEndianCRC = swapEndian(crc).toUpperCase();
-
-            // Sonuçları göster
-            document.getElementById("bigEndian").innerText = bigEndianCRC;
-            document.getElementById("littleEndian").innerText = littleEndianCRC;
-            document.getElementById("bigEndianMessage").innerText = truncatedHex + bigEndianCRC;
-            document.getElementById("littleEndianMessage").innerText = truncatedHex + littleEndianCRC;
-            resultSection.style.display = 'block';
-        }
-
-        function hexStringToBytes(hex) {
-            let bytes = [];
-            for (let i = 0; i < hex.length; i += 2) {
-                bytes.push(parseInt(hex.substr(i, 2), 16));
-            }
-            return bytes;
-        }
-
-        function computeCRC16(data) {
+        function calculateCRC(endianType) {
             let crc = 0xFFFF;
-            for (let byte of data) {
-                crc ^= byte;
+            let mesaj = document.getElementById("inputText").value.trim().toUpperCase();
+            let resultElement = document.getElementById("result");
+            let resultContainer = document.querySelector(".result-container");
+
+            let mesajTemiz = "";
+            for (let j = 0; j < mesaj.length; j++) {
+                if (mesaj.substring(j, j + 2) === "0X") {
+                    j++;
+                } else if (mesaj[j] !== " ") {
+                    mesajTemiz += mesaj[j];
+                }
+            }
+
+            if (mesajTemiz.length % 2 !== 0) {
+                resultElement.textContent = "Hata: Giriş tam byte değil!";
+                resultContainer.classList.add("error");
+                return;
+            } else {
+                resultContainer.classList.remove("error");
+            }
+
+            let mesajBoyu = mesajTemiz.length - 4;
+
+            for (let k = 0; k < mesajBoyu; k += 2) {
+                let mesajByte = mesajTemiz.substring(k, k + 2);
+                let mesajByteSayi = parseInt(mesajByte, 16);
+                
+                crc = crc ^ mesajByteSayi;
                 for (let i = 0; i < 8; i++) {
                     if (crc & 0x0001) {
                         crc = (crc >> 1) ^ 0xA001;
                     } else {
-                        crc >>= 1;
+                        crc = crc >> 1;
                     }
                 }
             }
-            return crc;
-        }
 
-        function swapEndian(value) {
-            let hex = value.toString(16).toUpperCase().padStart(4, '0');
-            return hex.substr(2, 2) + hex.substr(0, 2);
+            if (endianType === "little") {
+                crc = ((crc & 0xFF) << 8) + ((crc & 0xFF00) >> 8);
+            }
+
+            resultElement.textContent = crc.toString(16).toUpperCase().padStart(4, '0');
         }
     </script>
-</head>
-<body>
-    <div class="container">
-        <h2>Modbus CRC16 Calculator</h2>
-        <div class="input-group">
-            <label for="hexInput">HEX Input:</label>
-            <input type="text" id="hexInput" placeholder="Sample: 0x31,0x32,... or 31 32 33... or 313233...">
-            <button onclick="calculateCRC()">Calculate</button>
-            <div id="errorMessage" class="error-message"></div>
-        </div>
-        <div class="result-section" style="display: none;">
-            <h3>Sonuçlar:</h3>
-            <p>Big Endian CRC16: <span id="bigEndian"></span></p>
-            <p>Little Endian CRC16: <span id="littleEndian"></span></p>
-            <h3>CRC Mesage (İlk 6 byte + CRC):</h3>
-            <p>Big Endian Mesage: <span id="bigEndianMessage"></span></p>
-            <p>Little Endian Mesage: <span id="littleEndianMessage"></span></p>
-        </div>
-    </div>
 </body>
 </html>
